@@ -15,5 +15,15 @@ namespace Parcial1Ap1_RaidyDuran
         {
             InitializeComponent();
         }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new UI.Registros.EmpleadosRegistroForm().Show();
+        }
+
+        private void empleadosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new UI.Consultas.EmpleadosConsultasForm().Show();
+        }
     }
 }
