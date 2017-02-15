@@ -22,7 +22,7 @@ namespace Parcial1Ap1_RaidyDuran.UI.Registros
 
         }
 
-        private void Limpiar()
+        public void Limpiar()
         {
             empleadoIdTextBox.Clear();
             nombreTextBox.Clear();
@@ -59,19 +59,29 @@ namespace Parcial1Ap1_RaidyDuran.UI.Registros
         private void Guardarbutton_Click(object sender, EventArgs e)
         {
             var guardar = new Empleados();
+            int id = 0;
 
-            if (!Validar())
+            using (var context = new DAL.Respository<Empleados>())
             {
-                MessageBox.Show("Por favor llenar todos los campos.");
-            }
-            else 
-            {
-                guardar.Nombre = nombreTextBox.Text;
-                guardar.Sueldo = Convert.ToDouble(sueldomaskedTextBox.Text);
-                guardar.FechaNacimiento = fechaNacimientoDateTimePicker.Value;
+                if (!Validar())
+                {
+                    MessageBox.Show("Por favor llenar todos los campos.");
+                }
+                else
+                {
+                    guardar.Nombre = nombreTextBox.Text;
+                    guardar.Sueldo = Convert.ToDouble(sueldomaskedTextBox.Text);
+                    guardar.FechaNacimiento = fechaNacimientoDateTimePicker.Value;
+                    guardar.EmpleadoId = Utilidades.TOINT(empleadoIdTextBox.Text);
 
-                if (BLL.EmpleadosBLL.Guardar(guardar))
-                    MessageBox.Show("El empleado se guardo con exito.");
+                    if(id != guardar.EmpleadoId)
+                    {
+                        context.Modificar(guardar);
+                        MessageBox.Show("El empleado se modifico con exito.");
+                    }
+                    else if(context.Guardar(guardar))
+                        MessageBox.Show("El empleado se guardo con exito.");
+                }
             }
 
             Limpiar();
@@ -79,7 +89,13 @@ namespace Parcial1Ap1_RaidyDuran.UI.Registros
 
         private void buscarbutton_Click(object sender, EventArgs e)
         {
-            var buscar = BLL.EmpleadosBLL.Buscar(Utilidades.TOINT(empleadoIdTextBox.Text));
+            var buscar = new Empleados();
+            int id = Utilidades.TOINT(empleadoIdTextBox.Text);
+
+            using (var context = new DAL.Respository<Empleados>())
+            {
+                buscar = context.Buscar(p => p.EmpleadoId == id);
+            }
 
             if (buscar != null)
             {
@@ -95,18 +111,22 @@ namespace Parcial1Ap1_RaidyDuran.UI.Registros
 
         private void Eliminarbutton_Click(object sender, EventArgs e)
         {
-            var eliminar = BLL.EmpleadosBLL.Buscar(Utilidades.TOINT(empleadoIdTextBox.Text));
+            int id = Utilidades.TOINT(empleadoIdTextBox.Text);
 
-            if (eliminar != null)
+            using (var context = new DAL.Respository<Empleados>())
             {
-                BLL.EmpleadosBLL.Eliminar(eliminar);
-                MessageBox.Show("El empleado se elimino con exito.");
-                Limpiar();
+                if (context.Eliminar(context.Buscar(p => p.EmpleadoId == id)))
+                {
+                    Limpiar();
+                    MessageBox.Show("El empleado se elimino con exito.");                  
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo eliminar el empleado.");
+                }
             }
-            else
-            {
-                MessageBox.Show("No se pudo eliminar el empleado.");
-            }
+
+
         }
     }
 }

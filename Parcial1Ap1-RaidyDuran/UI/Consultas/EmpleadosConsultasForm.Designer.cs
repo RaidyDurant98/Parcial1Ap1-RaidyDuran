@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.ListadataGridView = new System.Windows.Forms.DataGridView();
             this.FiltrarConsultacomboBox = new System.Windows.Forms.ComboBox();
             this.FiltrarConsultatextBox = new System.Windows.Forms.TextBox();
@@ -36,7 +37,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.HastadateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.Filtrarbutton = new System.Windows.Forms.Button();
+            this.FiltrarerrorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ListadataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FiltrarerrorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // ListadataGridView
@@ -112,6 +115,10 @@
             this.Filtrarbutton.UseVisualStyleBackColor = true;
             this.Filtrarbutton.Click += new System.EventHandler(this.Filtrarbutton_Click);
             // 
+            // FiltrarerrorProvider
+            // 
+            this.FiltrarerrorProvider.ContainerControl = this;
+            // 
             // EmpleadosConsultasForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -129,6 +136,7 @@
             this.Text = "EmpleadosConsultasForm";
             this.Load += new System.EventHandler(this.EmpleadosConsultasForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ListadataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FiltrarerrorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -144,5 +152,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker HastadateTimePicker;
         private System.Windows.Forms.Button Filtrarbutton;
+        private System.Windows.Forms.ErrorProvider FiltrarerrorProvider;
     }
 }
