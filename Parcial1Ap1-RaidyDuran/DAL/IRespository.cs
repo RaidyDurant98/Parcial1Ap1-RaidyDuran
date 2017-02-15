@@ -8,11 +8,11 @@ namespace Parcial1Ap1_RaidyDuran.DAL
 {
     public interface IRespository<TEntity> : IDisposable where TEntity : class
     {
-        bool Guardar(TEntity entity);
-        TEntity Buscar(Expression<Func<TEntity, bool>> expresion);
-        bool Modificar(TEntity entity);
-        bool Eliminar(TEntity entity);
-        List<TEntity> GetList(Expression<Func<TEntity, bool>> expression);
+        bool Guardar(TEntity laEntidad);
+        TEntity Buscar(Expression<Func<TEntity, bool>> criterioBusqueda);
+        bool Modificar(TEntity laEntidad);
+        bool Eliminar(TEntity laEntidad);
+        List<TEntity> GetList(Expression<Func<TEntity, bool>> criterioBusqueda);
         List<TEntity> GetListTodo();
     }
 }
